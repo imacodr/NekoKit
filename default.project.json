@@ -1,0 +1,24 @@
+{
+  "name": "nekokit",
+  "tree": {
+    "$className": "DataModel",
+
+    "ReplicatedStorage": {
+      "Packages": {
+        "$path": "Packages",
+
+        "NekoKit": {
+          "$path": "src"
+        }
+      }
+    },
+
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "NekoTest": {
+          "$path": "test"
+        }
+      }
+    }
+  }
+}
