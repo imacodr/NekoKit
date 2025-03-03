@@ -11,5 +11,4 @@ print(bond.Theme)
 
 bond:New("Frame")({
 	Size = UDim2.new(0, 100, 0, 100),
-	BackgroundColor3 = "Boom.Balls.Test",
 })
