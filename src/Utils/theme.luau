@@ -28,6 +28,36 @@ local function mergeTables(destination, source)
 	end
 end
 
+-- checkTheme
+-- Checks if a value is a theme value and returns the theme value if it is.
+-- @param scope: Fusion.Scope
+-- @param value: string
+-- @return any
+function checkTheme(scope: Fusion.Scope, value: string)
+	if not scope.Theme then
+		error("No theme found in scope.")
+	end
+
+	if typeof(value) ~= "string" then
+		return value
+	end
+
+	local themeValue = scope.Theme -- Start with the root theme table
+
+	-- Split the value by periods to handle nested values
+	local keys = string.split(value, ".")
+
+	-- Traverse the nested keys to access the desired theme value
+	for _, key in ipairs(keys) do
+		themeValue = themeValue[key]
+		if not themeValue then
+			return nil -- Return nil if any key is not found
+		end
+	end
+
+	return themeValue
+end
+
 -- buildTheme
 -- Builds a NekoTheme by merging the global theme, the theme extensions, and the themes of the libs.
 -- @param scope: Fusion.Scope
@@ -66,4 +96,5 @@ end
 
 return {
 	buildTheme = buildTheme,
+	checkTheme = checkTheme,
 }

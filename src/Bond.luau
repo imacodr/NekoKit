@@ -25,7 +25,7 @@ export type NekoScope = {
 	LoadLib: (Fusion.Scope, any) -> (),
 	FusionNew: (string) -> (Fusion.Props) -> Instance,
 	Value: (string) -> Instance,
-	Children: any,
+	Children: Fusion.Children,
 	deriveScope: (Fusion.Scope) -> Fusion.Scope,
 	innerScope: Fusion.Scope,
 	doCleanup: () -> (),
