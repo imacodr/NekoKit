@@ -4,6 +4,9 @@
     "$className": "DataModel",
 
     "ReplicatedStorage": {
+      "global.neko": {
+        "$path": "test/themetest"
+      },
       "Packages": {
         "$path": "Packages",
 

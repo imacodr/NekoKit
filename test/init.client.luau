@@ -7,8 +7,9 @@ local bond = Neko.Bond("boom", {
 })
 
 print(bond.Id)
+print(bond.Theme)
 
-local app = bond:New("Frame")({
+bond:New("Frame")({
 	Size = UDim2.new(0, 100, 0, 100),
 	BackgroundColor3 = Color3.fromRGB(255, 0, 0),
 })
