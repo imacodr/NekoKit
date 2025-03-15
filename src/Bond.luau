@@ -65,9 +65,12 @@ function Bond(id: string, themeExtensions: { [string]: any }, overrides: { [stri
 			return parent:FindFirstChild("neko_" .. id)
 		end,
 		LoadLib = function(scope: Fusion.Scope, lib: any)
-			scope.Libs[lib.Name] = lib
+			local libInfo = libs.getLibInfo(lib)
+
+			scope.Libs[libInfo.name] = libInfo
 
 			scope.Theme = theme.buildTheme(scope, themeExtensions)
+			print(scope.Theme)
 		end,
 		FusionNew = Fusion.New,
 		Value = Fusion.Value,
@@ -96,6 +99,7 @@ function Bond(id: string, themeExtensions: { [string]: any }, overrides: { [stri
 	})
 
 	nekoscope.Theme = theme.buildTheme(nekoscope, themeExtensions)
+	nekoscope.Libs = {}
 
 	return nekoscope
 end

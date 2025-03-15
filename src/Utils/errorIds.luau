@@ -10,4 +10,5 @@ return {
 	checkSizeCatch = "checkSize Error: '%s'",
 	checkAnchorPointCatch = "checkAnchorPoint Error: '%s'",
 	toastUUIDCatch = "useToast was not able to generate a unique ID using Roblox's HttpService (most likely for Roblox Services being unavailable).\n\n Proceeding with number ToastId.\n\n Full Error: '%s'",
+	failedToLoadExternalLib = "Failed to load external lib at path: %s",
 }

@@ -66,7 +66,7 @@ end
 function buildTheme(scope: Fusion.Scope, extensions: { [string]: any }): NekoTheme
 	local file = game.ReplicatedStorage:FindFirstChild("global.neko")
 
-	local globalTheme = {}
+	local globalTheme = { Libs = {} }
 
 	if file then
 		globalTheme = require(file)
@@ -87,7 +87,7 @@ function buildTheme(scope: Fusion.Scope, extensions: { [string]: any }): NekoThe
 
 	for _, lib in pairs(libs) do
 		if lib.theme then
-			mergeTables(finishedTheme, lib.theme)
+			mergeTables(finishedTheme, { Libs = { [lib.name] = lib.theme } })
 		end
 	end
 

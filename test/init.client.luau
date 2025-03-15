@@ -9,6 +9,9 @@ local bond = Neko.Bond("boom", {
 print(bond.Id)
 print(bond.Theme)
 
+bond:LoadLib(script.CoolLib)
+
 bond:New("Frame")({
 	Size = UDim2.new(0, 100, 0, 100),
+	BackgroundColor3 = "Boom.Balls.Test",
 })

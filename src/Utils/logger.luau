@@ -1,6 +1,6 @@
 local Logger = {}
 
-local errorIDs = require(script.Parent.errorIDs)
+local errorIDs = require(script.Parent.errorIds)
 
 local function formatErrorMessage(errorID, ...)
 	local errorMessageTemplate = errorIDs[errorID]
