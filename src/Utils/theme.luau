@@ -4,7 +4,10 @@
 -- A module that contains functions to build a NekoTheme.
 -- @module theme
 
+local Root = script.Parent.Parent
 local Packages = script.Parent.Parent.Parent
+
+local LibsTypes = Root.Utils.libs
 
 local Fusion = require(Packages.Fusion)
 
@@ -33,7 +36,7 @@ end
 -- @param scope: Fusion.Scope
 -- @param value: string
 -- @return any
-function checkTheme(scope: Fusion.Scope, value: string)
+function checkTheme(scope: Fusion.Scope, value: string, lib: LibsTypes.NekoLib?)
 	if not scope.Theme then
 		error("No theme found in scope.")
 	end
@@ -42,16 +45,35 @@ function checkTheme(scope: Fusion.Scope, value: string)
 		return value
 	end
 
-	local themeValue = scope.Theme -- Start with the root theme table
+	-- First check lib theme if provided
+	if lib then
+		local libTheme = scope.Theme.Libs and scope.Theme.Libs[lib.name]
+		print(libTheme)
+		if libTheme then
+			local keys = string.split(value, ".")
+			local themeValue = libTheme
 
-	-- Split the value by periods to handle nested values
+			for _, key in ipairs(keys) do
+				if not themeValue[key] then
+					break -- Break if key not found in lib theme
+				end
+				themeValue = themeValue[key]
+			end
+
+			if themeValue ~= libTheme then -- If we found a value in lib theme
+				return themeValue
+			end
+		end
+	end
+
+	-- Fall back to global theme
+	local themeValue = scope.Theme
 	local keys = string.split(value, ".")
 
-	-- Traverse the nested keys to access the desired theme value
 	for _, key in ipairs(keys) do
 		themeValue = themeValue[key]
 		if not themeValue then
-			return nil -- Return nil if any key is not found
+			return nil
 		end
 	end
 

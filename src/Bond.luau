@@ -65,12 +65,11 @@ function Bond(id: string, themeExtensions: { [string]: any }, overrides: { [stri
 			return parent:FindFirstChild("neko_" .. id)
 		end,
 		LoadLib = function(scope: Fusion.Scope, lib: any)
-			local libInfo = libs.getLibInfo(lib)
+			local libInfo = libs.loadExternalLib(scope, lib)
 
 			scope.Libs[libInfo.name] = libInfo
 
 			scope.Theme = theme.buildTheme(scope, themeExtensions)
-			print(scope.Theme)
 		end,
 		FusionNew = Fusion.New,
 		Value = Fusion.Value,

@@ -43,12 +43,12 @@ function createPaddingAndCornerInstances(scope, props)
 end
 
 -- Function to handle theme validation and apply theme values
-function validateProps(scope, props)
+function validateProps(scope, props, lib)
 	local finalProps = {}
 
 	-- Iterate through all properties and resolve theme values
 	for key, value in pairs(props) do
-		local themeValue = checkTheme(scope, value)
+		local themeValue = checkTheme(scope, value, lib)
 		finalProps[key] = themeValue or value
 	end
 
@@ -59,9 +59,9 @@ function validateProps(scope, props)
 	-- local anchorPoint = checkAnchorPoint(finalProps) or position.AnchorPoint
 	-- finalProps.AnchorPoint = nil
 
-	local backgroundColor = checkTheme(scope, finalProps.BackgroundColor3)
-		or checkTheme(scope, finalProps.BackgroundColor)
-		or checkTheme(scope, finalProps.Bg)
+	local backgroundColor = checkTheme(scope, finalProps.BackgroundColor3, lib)
+		or checkTheme(scope, finalProps.BackgroundColor, lib)
+		or checkTheme(scope, finalProps.Bg, lib)
 		or nil
 
 	finalProps.BackgroundColor3 = backgroundColor

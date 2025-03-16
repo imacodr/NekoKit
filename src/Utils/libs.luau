@@ -1,19 +1,26 @@
 -- libs
 -- Import external libs to NekoKit.
 
+local Root = script.Parent.Parent
+local Packages = script.Parent.Parent.Parent
+
 local logger = require(script.Parent.logger)
+local Fusion = require(Packages.Fusion)
 
 export type Libs = {
 	[string]: any,
 }
 
-function getLibInfo(path: any)
-	local lib = require(path)
+export type NekoLib = {
+	name: string,
+	version: string?,
+	theme: { [string]: any },
+	components: { [string]: any },
+}
 
-	if lib then
-		return lib
-	else
-		logger:logWarning("failedToLoadExternalLib", path:GetFullName())
+function getLibInfo(lib: NekoLib)
+	if #lib == 0 then
+		return logger:logWarning("failedToLoadExternalLib", lib:GetFullName())
 	end
 
 	lib.theme = { [lib.name] = lib.theme }
@@ -23,17 +30,28 @@ function getLibInfo(path: any)
 	return lib
 end
 
-function loadExternalLib(path: any)
+function loadExternalLib(scope: Fusion.Scope, path: any)
 	local lib = require(path)
 
-	if lib then
-		return lib
-	else
-		logger:logWarning("failedToLoadExternalLib", path:GetFullName())
+	if not lib then
+		return logger:logWarning("failedToLoadExternalLib", path:GetFullName())
 	end
 
-	print(lib)
-	return
+	local res
+
+	xpcall(function()
+		res = lib.initiate(scope)
+
+		if res then
+			res = getLibInfo(res)
+		else
+			return logger:logWarning("failedToInitiateExternalLib", path:GetFullName())
+		end
+	end, function(err)
+		return logger:logError("failedToInitiateExternalLib", path:GetFullName(), err)
+	end)
+
+	return res
 end
 
 return {
